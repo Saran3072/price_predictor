@@ -1,4 +1,5 @@
 import streamlit as st
+from pathlib import Path
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
@@ -6,7 +7,11 @@ from sklearn import linear_model
 from sklearn.metrics import mean_absolute_error as mae
 from sklearn.metrics import mean_squared_error as mse
 
-df = pd.read_csv(r"D:\Academic\MinorProject\Main\IPL_Data(AutoRecovered).csv")
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+
+main_file = current_dir / "IPL_Data(AutoRecovered).csv"
+
+df = pd.read_csv(main_file)
 df['Type'].unique()
 
 label_encoder = preprocessing.LabelEncoder()
@@ -18,33 +23,33 @@ selection = st.sidebar.selectbox("Select the type of Player", ("Batsman", "Bowle
 def get_dataset(selection):
     if selection == "Batsman":
         batsman = df[df['Type'] == 1][['Name','ValueinCR', 'MatchPlayed', 'InningsBatted', 'RunsScored', '100s', '50s', 'BattingAVG', 'BattingS/R', 'CatchesTaken', 'Captaincy']].fillna(0)
-        x_bat_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingDataBat.csv")
-        x_bat_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingDataBat.csv")
-        y_bat_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingTargetBat.csv")
-        y_bat_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingTargetBat.csv")
+        x_bat_train = pd.read_csv(current_dir / "TrainingDataBat.csv")
+        x_bat_test = pd.read_csv(current_dir / "TestingDataBat.csv")
+        y_bat_train = pd.read_csv(current_dir / "TrainingTargetBat.csv")
+        y_bat_test = pd.read_csv(current_dir / "TestingTargetBat.csv")
         return x_bat_train, x_bat_test, y_bat_train, y_bat_test
     elif selection == "Bowler":
         bowler = df[df['Type'] == 2][['Name','ValueinCR', 'MatchPlayed', 'CatchesTaken', 'InningsBowled', 'EconomyRate', 'Wickets', 'BowlingAVG', '3s', '5s', 'Captaincy']].fillna(0)
-        x_bowl_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingDataBowl.csv")
-        x_bowl_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingDataBowl.csv")
-        y_bowl_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingTargetBowl.csv")
-        y_bowl_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingTargetBowl.csv")
+        x_bowl_train = pd.read_csv(current_dir / "TrainingDataBowl.csv")
+        x_bowl_test = pd.read_csv(current_dir / "TestingDataBowl.csv")
+        y_bowl_train = pd.read_csv(current_dir / "TrainingTargetBowl.csv")
+        y_bowl_test = pd.read_csv(current_dir / "TestingTargetBowl.csv")
         return x_bowl_train, x_bowl_test, y_bowl_train, y_bowl_test
 
     elif selection == "All Rounder":
         all_rounder = df[df['Type'] == 0][['Name', 'ValueinCR', 'MatchPlayed', 'InningsBatted', 'RunsScored', '100s', '50s', 'BattingAVG', 'BattingS/R', 'CatchesTaken', 'InningsBowled', 'EconomyRate', 'Maidens', 'Wickets', 'BowlingAVG', '3s', '5s', 'Captaincy']].fillna(0)
-        x_all_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingDataAll.csv")
-        x_all_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingDataAll.csv")
-        y_all_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingTargetAll.csv")
-        y_all_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingTargetAll.csv")
+        x_all_train = pd.read_csv(current_dir / "TrainingDataAll.csv")
+        x_all_test = pd.read_csv(current_dir / "TestingDataAll.csv")
+        y_all_train = pd.read_csv(current_dir / "TrainingTargetAll.csv")
+        y_all_test = pd.read_csv(current_dir / "TestingTargetAll.csv")
         return x_all_train, x_all_test, y_all_train, y_all_test
 
     elif selection == "Wicket Keeper":
         wk = df[df['Type'] == 3][['Name', 'ValueinCR', 'MatchPlayed', 'InningsBatted', 'RunsScored', '100s', '50s', 'BattingAVG', 'BattingS/R', 'CatchesTaken', 'StumpingsMade', 'Captaincy']].fillna(0)
-        x_wk_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingDataWk.csv")
-        x_wk_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingDataWk.csv")
-        y_wk_train = pd.read_csv(r"D:\Academic\MinorProject\Main\TrainingTargetWk.csv")
-        y_wk_test = pd.read_csv(r"D:\Academic\MinorProject\Main\TestingTargetWk.csv")
+        x_wk_train = pd.read_csv(current_dir / "TrainingDataWk.csv")
+        x_wk_test = pd.read_csv(current_dir / "TestingDataWk.csv")
+        y_wk_train = pd.read_csv(current_dir / "TrainingTargetWk.csv")
+        y_wk_test = pd.read_csv(current_dir / "TestingTargetWk.csv")
         return x_wk_train, x_wk_test, y_wk_train, y_wk_test
 
 
